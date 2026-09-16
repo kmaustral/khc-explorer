@@ -1,11 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const Anthropic = require('@anthropic-ai/sdk');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 app.use(cors());
 app.use(express.json());
@@ -26,7 +23,7 @@ Great satisfaction comes from mastery of a complex skill. Completing a craft pro
 Articles: "4 Reasons Craft Is Good for Your Mental Health" (reduces anxiety, depression, loneliness); "Arts and Crafts Give Greater Life Satisfaction Than Work" (survey of 7,000); "Craft Psychology" (reduces stress); "The Healing Power of Bello" (SanPa program); "Lifting Depression - A Neuroscientist's Hands-On Approach" (brain resilience); "Craftsmanship names an enduring, basic human impulse" (long-term well-being from doing work well).
 
 CLAIM: Craft helps recovery from trauma [Psychological + Disaster recovery]
-Craft has positive effect on recovery from trauma including illness, disaster, war. Making reduces need for small talk; silence provides space for profound conversation. Making can be constructive experience that kindles hope.
+Craft has positive effect on recovery from trauma including illness, disaster, war. Making reduces need for small talk; silence provides space for profound conversation.
 Articles: "Common Threads Project" (story cloths in sewing circles for women affected by trauma); "PTSD How I Turned My Life Around on a Potter's Wheel" (veteran Craig Mealing); "Strathewen - The Letterbox Project" (bushfire victims made mosaic letterboxes); "Sashiko Gals Project" (recovery from Great East Japan Earthquake); "Use of Domestic Craft for Meaning-Making Post-Disaster" (Christchurch earthquake); "Things Needed Made" (Khiam detention camp prisoners made needle from orange stem); "Beading as a therapeutic activity in Ghana".
 
 CLAIM: Craft plays an important role in prisons [Social]
@@ -78,7 +75,7 @@ Articles: "Craft at COP26"; "Fewer Better Things"; "Craft in the age of climate 
 
 CLAIM: Craft production is environmentally responsible [Environmental]
 Craft practitioners tend to be small-scale, use locally sourced materials, employ less detrimental methods.
-Articles: "Factors Influencing Pro-Environmental Behaviors in Craft Businesses"; "Piña weaving and climate change in Kalibo"; "Sustainable Crafts - Bibliometric Analysis".
+Articles: "Factors Influencing Pro-Environmental Behaviors in Craft Businesses"; "Pina weaving and climate change in Kalibo"; "Sustainable Crafts - Bibliometric Analysis".
 
 CLAIM: Craft promotes local development [Environmental + Social + Economic]
 Favours local materials and distribution to local markets, offering enduring employment and community pride.
@@ -112,7 +109,7 @@ Craft fosters resilience when minority culture is not reflected in mainstream so
 Articles: "Cultural values - why Heritage Crafts is redefining craft" (Romani community UK); "Textiles Show History of Secret War in Laos" (Hmong story cloths); "The Story of the Keffiyeh Part Two".
 
 CLAIM: Craft can foster cultural tolerance [Cultural]
-Promotes cultural understanding and tolerance. Example: Bábbarra Women's Centre (Australia) and Tharangini Studio (Bangalore) collaboration.
+Promotes cultural understanding and tolerance. Example: Babbarra Women's Centre (Australia) and Tharangini Studio (Bangalore) collaboration.
 
 CLAIM: Craft plays an important role in worship [Spiritual]
 Making objects for worship is significant in many religions.
@@ -150,7 +147,7 @@ Articles: "Notre Dame - time to call in the French builders with medieval skills
 
 CLAIM: Makers are creative [Creative]
 Through practical knowledge of materials, makers unlock new creative possibilities.
-Articles: "Innovation through Craft – from policy to research to impact"; "Steve Jobs - A Great Idea Doesn't Always Translate Into a Great Product".
+Articles: "Innovation through Craft - from policy to research to impact"; "Steve Jobs - A Great Idea Doesn't Always Translate Into a Great Product".
 
 CLAIM: Craft skills can strengthen creativity in STEM [Creative + Scientific]
 Nobel Prize winners are 15-25 times more likely to engage in arts and crafts as adults.
@@ -187,19 +184,19 @@ craft (English): In Old English, referred to knowledge for doing things — not 
 
 artesanato (Portuguese/Brazil): Negative connotation in Brazil because of Eurocentric art/craft separation — denotes amateur, low-skilled work often by women. Author: Liliana Morais.
 
-kôgei 工藝 (Japanese): First used in Japan in 1873 as translation of "craft" for Vienna International Exhibition. Ideogram 工 embodies "skill" or "high level of technique". Pre-modern Japanese used media-specific terms. Author: Liliana Morais.
+kogei (Japanese): First used in Japan in 1873 as translation of "craft" for Vienna International Exhibition. Ideogram embodies "skill" or "high level of technique". Pre-modern Japanese used media-specific terms. Author: Liliana Morais.
 
 duodji (Sami, Norway): The artistic crafts form of Indigenous people of the European Arctic. Refers to the whole process — from idea to final product. A holistic circle of creation where nature and humans collaborate.
 
-shilp शिल्प (Sanskrit/Hindi): The skill to design, make, create. The craftsman ("shilpi") has association with "vishwakarma" (divine creator). Author: Toolika Gupta.
+shilp (Sanskrit/Hindi): The skill to design, make, create. The craftsman ("shilpi") has association with "vishwakarma" (divine creator). Author: Toolika Gupta.
 
-sanāye'-e dastī صنایع دستی (Persian/Iranian): Merges "sanāye'" (skills/crafts) and "dastī" (handmade). In contrast with fine art which is autonomous (Kantian), craft is heteronomous — rules set by religion, local culture, market. Mentioned in poetry by Rumi. Author: Azadeh Nikouei.
+sanaye-e dasti (Persian/Iranian): Merges "sanaye" (skills/crafts) and "dasti" (handmade). In contrast with fine art which is autonomous (Kantian), craft is heteronomous — rules set by religion, local culture, market. Mentioned in poetry by Rumi. Author: Azadeh Nikouei.
 
-jitda 짓다 (Korean): "To build" or "to craft" — the creative act of engaging in activities related to necessities of life: making clothes, cooking food, constructing houses, making medicine, making poetry, connecting relationships. Author: Jaeyoung Kang.
+jitda (Korean): "To build" or "to craft" — the creative act of engaging in activities related to necessities of life: making clothes, cooking food, constructing houses, making medicine, making poetry, connecting relationships. Author: Jaeyoung Kang.
 
-kaivinai கைவினை (Tamil): "kai" (hand) + "vinai" (action/profession). Found throughout ancient Tamil literature. Tamil Nadu's Kalaignar Kaivinai Thittam positions craft as a right based on individual skill — contrasts with India's caste-based Vishwakarma scheme. Author: Se Dhanapal.
+kaivinai (Tamil): "kai" (hand) + "vinai" (action/profession). Found throughout ancient Tamil literature. Tamil Nadu's Kalaignar Kaivinai Thittam positions craft as a right based on individual skill — contrasts with India's caste-based Vishwakarma scheme. Author: Se Dhanapal.
 
-sina'a صناعة and hirfa حرفة (Arabic): sina'a = the art of making/production; hirfa = trade or craft profession.
+sina'a and hirfa (Arabic): sina'a = the art of making/production; hirfa = trade or craft profession.
 
 --- ABOUT KHC ---
 Knowledge House for Craft is an independent association for those who create and maintain craft knowledge. Website: knowledgehouseforcraft.org. Activities include the Value of Craft project (15 domains, claims linked to articles), World Craft Dictionary, Reinventing the Wheel talk series, and Country Salon events.
@@ -226,15 +223,34 @@ app.post('/ask', async (req, res) => {
     return res.status(400).json({ error: 'messages array required' });
   }
 
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ error: 'API key not configured on server' });
+  }
+
   try {
-    const response = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      system: SYSTEM_PROMPT,
-      messages
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages
+      })
     });
 
-    res.json({ content: response.content[0].text });
+    const data = await response.json();
+
+    if (data.error) {
+      return res.status(500).json({ error: data.error.message });
+    }
+
+    res.json({ content: data.content[0].text });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
