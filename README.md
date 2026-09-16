@@ -13,7 +13,7 @@ khc-explorer-server/
   README.md        — this file
 ```
 
-## Deploy to Railway (recommended — free tier)
+## Deploy to Railway (recommended — free tier) 
 
 Railway is the easiest host for this. Free tier covers low-traffic use.
 
