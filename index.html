@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KHC Knowledge Explorer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f2ec;
+    --surface: #faf8f4;
+    --border: #ddd8ce;
+    --text: #1a1814;
+    --muted: #7a7369;
+    --accent: #3d5a3e;
+    --accent-light: #e8f0e8;
+    --user-bg: #3d5a3e;
+    --user-text: #f0f4f0;
+    --serif: 'EB Garamond', Georgia, serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: var(--serif);
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  header {
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    background: var(--surface);
+  }
+
+  header h1 { font-size: 1.05rem; font-weight: 500; }
+
+  header a {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+    text-decoration: none;
+  }
+
+  header a:hover { color: var(--accent); }
+
+  #scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 2rem;
+    max-width: 780px;
+    width: 100%;
+    margin: 0 auto;
+    align-self: stretch;
+  }
+
+  #suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 1.25rem 0 0.75rem;
+  }
+
+  .sug {
+    font-family: var(--serif);
+    font-size: 0.82rem;
+    font-style: italic;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .sug:hover {
+    background: var(--accent-light);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  #chat {
+    padding: 0.5rem 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .msg-row { display: flex; flex-direction: column; gap: 0.2rem; }
+  .msg-row.user { align-items: flex-end; }
+  .msg-row.assistant { align-items: flex-start; }
+
+  .msg-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0 4px;
+  }
+
+  .bubble {
+    max-width: 88%;
+    padding: 0.85rem 1.05rem;
+    font-size: 1rem;
+    line-height: 1.7;
+    border-radius: 4px;
+  }
+
+  .msg-row.user .bubble {
+    background: var(--user-bg);
+    color: var(--user-text);
+    border-radius: 8px 8px 2px 8px;
+  }
+
+  .msg-row.assistant .bubble {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px 8px 8px 8px;
+  }
+
+  .msg-row.thinking .bubble {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-style: italic;
+    font-size: 0.9rem;
+    padding: 0.25rem 0;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  .empty-state {
+    margin-top: 0.75rem;
+    padding: 1rem 1rem;
+    color: var(--muted);
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.7;
+    border-left: 2px solid var(--border);
+  }
+
+  #input-area {
+    flex-shrink: 0;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    padding: 0.85rem 2rem 1rem;
+    max-width: 780px;
+    width: 100%;
+    margin: 0 auto;
+    align-self: stretch;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-end;
+  }
+
+  #user-input {
+    flex: 1;
+    font-family: var(--serif);
+    font-size: 1rem;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--surface);
+    color: var(--text);
+    resize: none;
+    min-height: 44px;
+    max-height: 130px;
+    line-height: 1.5;
+    transition: border-color 0.15s;
+  }
+
+  #user-input:focus { outline: none; border-color: var(--accent); }
+
+  #send-btn {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 0 1.25rem;
+    height: 44px;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  #send-btn:hover { background: #2e4530; }
+  #send-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  #footer {
+    flex-shrink: 0;
+    text-align: center;
+    padding: 0.4rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-family: var(--mono);
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  #footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Knowledge House for Craft — explorer</h1>
+  <a href="https://knowledgehouseforcraft.org" target="_blank">knowledgehouseforcraft.org ↗</a>
+</header>
+
+<div id="scroll-area">
+  <div id="suggestions">
+    <span class="sug" onclick="ask(this.textContent)">What does KHC say about craft in prisons?</span>
+    <span class="sug" onclick="ask(this.textContent)">How does craft relate to refugees and displacement?</span>
+    <span class="sug" onclick="ask(this.textContent)">What are the economic claims for craft?</span>
+    <span class="sug" onclick="ask(this.textContent)">Craft words in non-Western languages</span>
+    <span class="sug" onclick="ask(this.textContent)">How does craft connect to science and innovation?</span>
+    <span class="sug" onclick="ask(this.textContent)">What evidence is there for craft and mental health?</span>
+    <span class="sug" onclick="ask(this.textContent)">Craft and the environment</span>
+    <span class="sug" onclick="ask(this.textContent)">How is craft used to champion justice?</span>
+  </div>
+
+  <div id="chat">
+    <div class="empty-state">Ask a question about craft knowledge — its value across economic, psychological, cultural, environmental and other domains, or about words for craft in different languages.</div>
+  </div>
+</div>
+
+<div id="input-area">
+  <textarea id="user-input" placeholder="Ask about the value of craft…" rows="1"></textarea>
+  <button id="send-btn" onclick="sendMsg()">Ask →</button>
+</div>
+
+<div id="footer">
+  Knowledge House for Craft &nbsp;·&nbsp; <a href="https://knowledgehouseforcraft.org" target="_blank">knowledgehouseforcraft.org</a>
+</div>
+
+<script>
+let history = [];
+let loading = false;
+
+function addMsg(role, text) {
+  const chat = document.getElementById('chat');
+  const empty = chat.querySelector('.empty-state');
+  if (empty) empty.remove();
+
+  const row = document.createElement('div');
+  row.className = 'msg-row ' + role;
+
+  if (role !== 'thinking') {
+    const label = document.createElement('div');
+    label.className = 'msg-label';
+    label.textContent = role === 'user' ? 'you' : 'khc explorer';
+    row.appendChild(label);
+  }
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+
+  if (role === 'assistant') {
+    bubble.innerHTML = text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n\n/g, '<br><br>')
+      .replace(/\n/g, '<br>');
+  } else {
+    bubble.textContent = text;
+  }
+
+  row.appendChild(bubble);
+  chat.appendChild(row);
+
+  const scrollArea = document.getElementById('scroll-area');
+  scrollArea.scrollTop = scrollArea.scrollHeight;
+  return row;
+}
+
+async function ask(question) {
+  document.getElementById('user-input').value = question;
+  await sendMsg();
+}
+
+async function sendMsg() {
+  if (loading) return;
+  const input = document.getElementById('user-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('send-btn').disabled = true;
+  loading = true;
+
+  document.getElementById('suggestions').style.display = 'none';
+
+  addMsg('user', text);
+  history.push({ role: 'user', content: text });
+
+  const thinkingRow = addMsg('thinking', 'Searching the knowledge base…');
+
+  try {
+    const res = await fetch('/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: history })
+    });
+
+    const data = await res.json();
+    thinkingRow.remove();
+
+    if (data.error) {
+      addMsg('assistant', 'Error: ' + data.error);
+    } else {
+      addMsg('assistant', data.content);
+      history.push({ role: 'assistant', content: data.content });
+    }
+  } catch (err) {
+    thinkingRow.remove();
+    addMsg('assistant', 'Connection error. Please try again.');
+  }
+
+  document.getElementById('send-btn').disabled = false;
+  loading = false;
+}
+
+document.getElementById('user-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+});
+
+document.getElementById('user-input').addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 130) + 'px';
+});
+</script>
+</body>
+</html>
